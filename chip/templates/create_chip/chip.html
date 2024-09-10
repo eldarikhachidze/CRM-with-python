@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Chip</title>
+</head>
+<body>
+    <h1>Create Chip</h1>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Denomination</label>
+        <input type="number" step="0.01" id="name" name="name" placeholder="Enter chip denomination">
+        <button type="submit">Create</button>
+    </form>
+
+    <h1>All Chips</h1>
+    {% if chips %}
+    <ul>
+        {% for chip in chips %}
+            <li> ID: {{ chip.id }}. Denomination: {{ chip.denomination }}. Created AT: {{chip.date_created}} <a href="{% url 'delete' chip.id %}"> DELETE </a> </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No chips found</p>
+    {% endif %}
+</body>
+</html>

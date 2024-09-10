@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>tables</title>
+</head>
+<body>
+    <h1>Tables</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for chip in chips %}
+        <div>
+            <select name="table">
+                <option >{{ chip.denomination }}</option>
+            </select>
+            <input type="number" name="quantity" value="0">
+        </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+
+</body>
+</html>
