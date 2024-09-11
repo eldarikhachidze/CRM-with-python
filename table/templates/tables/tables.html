@@ -16,18 +16,25 @@
     <h1>Create Tables</h1>
     <form action="{% url 'create_table' %}" method="POST">
         {% csrf_token %}
+        <table border="1">
+            <label for="name">Table Name</label>
+            <input type="text" name="name" id="name">
+            <thead>
+                <tr>
+                    <th>Denomination</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chip in chips %}
+                <tr>
+                    <td><input type="number" name="denominations" value="{{ chip.denomination|floatformat:0 }}"></td>
+                    <td><input type="number" name="quantities" value="0"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-        <div>
-            <input type="text" name="name" placeholder="Table Name">
-        {% for chip in chips %}
-            <div>
-                <select name="chip">
-                    <option >{{ chip.denomination }}</option>
-                </select>
-                <input type="number" name="quantity" value="0">
-            </div>
-        </div>
-        {% endfor %}
         <button type="submit">Submit</button>
     </form>
 

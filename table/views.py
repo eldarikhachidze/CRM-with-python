@@ -12,8 +12,11 @@ def table_form(request):
 def create_table(request):
     if request.method == 'POST':
         name = request.POST.get('name').upper()
-        denominations = request.POST.getlist('chip')
-        quantities = request.POST.getlist('quantity')
+        denominations = request.POST.getlist('denominations')
+        quantities = request.POST.getlist('quantities')
+        print(name)
+        print(denominations)
+        print(quantities)
 
         flot = {}  # Dictionary to store denominations and quantities
 
@@ -44,10 +47,46 @@ def table_list(request):
 
     return render(request, 'tables/all_tables.html', {'tables': tables})
 
-def table_detail(request, table_id):
-    pass
+def table_detail(request, id):
+    table = Table.objects.get(id=id)
+
+    return render(request, 'tables/table_detail.html', {'table': table})
 
 def table_delete(request, id):
     table = Table.objects.get(id=id)
     table.delete()
+
     return redirect('table_list')
+
+def table_edit(request, id):
+    table = Table.objects.get(id=id)
+
+    if request.method == 'POST':
+        name = request.POST.get('name', '').upper()
+        denominations = request.POST.getlist('denominations')
+        quantities = request.POST.getlist('quantities')
+
+        # We need a way to get the denominations, assuming you have them stored somewhere or provided in the form
+        flot = {}
+        for denomination, quantity in zip(denominations, quantities):
+            if int(quantity) > 0:
+                flot[float(denomination)] = int(quantity)
+
+        if not flot:
+            messages.error(request, 'Please add chips to the table')
+            return redirect('table_edit', id=id)
+
+        if not name:
+            messages.error(request, 'Please add a name to the table')
+            return redirect('table_edit', id=id)
+
+        table.name = name
+        table.open_flot = flot
+        table.open_flot_total = sum([denomination * quantity for denomination, quantity in flot.items()])
+        table.save()
+        messages.success(request, 'Table updated successfully')
+        print(f"Table updated: {name} with flot: {flot} and total: {sum([denomination * quantity for denomination, quantity in flot.items()])}")
+
+        return redirect('table_list')
+
+    return render(request, 'tables/edit_table.html', {'table': table})
