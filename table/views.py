@@ -11,14 +11,19 @@ def table_form(request):
 def create_table(request):
     if request.method == 'POST':
         denominations = request.POST.getlist('chip')
-        print(denominations)
         quantities = request.POST.getlist('quantity')
-        print(quantities)
+
+        flot = {}  # Dictionary to store denominations and quantities
+
         for denomination, quantity in zip(denominations, quantities):
-            if int(quantity) > 0: # Only create a Table object if the quantity is greater than 0
-                Table.objects.create(denomination=float(denomination), quantity=int(quantity))
-                print(denomination, quantity)
-    return redirect('table_form')
+            if int(quantity) > 0:  # Only add valid quantities
+                flot[float(denomination)] = int(quantity)  # Add to the fleet dictionary
+
+        # Create a single Table entry with the entire fleet
+        if flot:
+            Table.objects.create(flot=flot)
+
+        return redirect('table_form')
 
 
 def table_list(request):
