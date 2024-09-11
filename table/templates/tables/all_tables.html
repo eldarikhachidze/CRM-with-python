@@ -30,6 +30,7 @@
             </tr>
         </tbody>
     </table>
+    <button><a href="{% url 'table_delete' table.id %}">Delete</a></button>
     {% endfor %}
     {% else %}
     <p>No tables found</p>

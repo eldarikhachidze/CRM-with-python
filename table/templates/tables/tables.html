@@ -4,6 +4,15 @@
     <title>Create tables</title>
 </head>
 <body>
+    <a href="{% url 'home' %}"><h3>Back to home page</h3></a>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>Error:{% if message.tags %} {% endif %} {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <h1>Create Tables</h1>
     <form action="{% url 'create_table' %}" method="POST">
         {% csrf_token %}

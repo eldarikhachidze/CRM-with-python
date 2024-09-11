@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from chip.models import Chip
 from .models import Table
 
@@ -21,7 +22,16 @@ def create_table(request):
                 flot[float(denomination)] = int(quantity)  # Add to the fleet dictionary
 
         # Create a single Table entry with the entire fleet
-        if flot:
+        if not flot:
+            messages.error(request, 'Please add chips to the table')
+            redirect('table_form')
+        elif not name:
+            messages.error(request, 'Please add a name to the table')
+            redirect('table_form')
+        elif Table.objects.filter(name=name).exists():
+            messages.error(request, 'Table already exists')
+            return redirect('table_form')
+        else:
             Table.objects.create(name=name, open_flot=flot, open_flot_total=sum([denomination * quantity for denomination, quantity in flot.items()]))
             print(f"Table created: {name} with flot: {flot} and total: {sum([denomination * quantity for denomination, quantity in flot.items()])}")
 
@@ -33,3 +43,11 @@ def table_list(request):
     tables = Table.objects.all()
 
     return render(request, 'tables/all_tables.html', {'tables': tables})
+
+def table_detail(request, table_id):
+    pass
+
+def table_delete(request, id):
+    table = Table.objects.get(id=id)
+    table.delete()
+    return redirect('table_list')
