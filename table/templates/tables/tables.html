@@ -5,17 +5,37 @@
 </head>
 <body>
     <h1>Tables</h1>
-    <form action="" method="POST">
+    <form action="{% url 'create_table' %}" method="POST">
         {% csrf_token %}
         {% for chip in chips %}
         <div>
-            <select name="table">
+            <select name="chip">
                 <option >{{ chip.denomination }}</option>
             </select>
             <input type="number" name="quantity" value="0">
         </div>
         {% endfor %}
         <button type="submit">Submit</button>
-
+    </form>
+    <h1>All Tables</h1>
+    {% if tables %}
+    <table>
+        <thead>
+            <tr>
+                <th>Chip</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table in tables %}
+            <tr>
+                <td>{{ table.denomination }}</td>
+                <td>{{ table.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    {% else %}
+        <p>No tables found</p>
+    {% endif %}
 </body>
 </html>
