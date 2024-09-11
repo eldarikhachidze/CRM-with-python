@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tables</title>
+</head>
+<body>
+    <a href="{% url 'table_form' %}"><h3>Back to table page</h3></a>
+
+    <h1>All Tables</h1>
+    {% if tables %}
+    {% for table in tables %}
+    <h2>Table Name: {{ table.name }}</h2>
+    <table border="1" display="flex">
+        <thead>
+            <tr>
+                <th>Chip</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for denomination, quantity in table.open_flot.items %}
+            <tr>
+                <td>{{ denomination|floatformat:0 }}</td>
+                <td>{{ quantity }}</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td>Total</td>
+                <td>{{ table.open_flot_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+    {% else %}
+    <p>No tables found</p>
+    {% endif %}
+</body>
+</html>

@@ -4,7 +4,7 @@
     <title>tables</title>
 </head>
 <body>
-    <h1>Tables</h1>
+    <h1>Create Tables</h1>
     <form action="{% url 'create_table' %}" method="POST">
         {% csrf_token %}
 
@@ -21,25 +21,7 @@
         {% endfor %}
         <button type="submit">Submit</button>
     </form>
-    <h1>All Tables</h1>
-    {% if tables %}
-    <table>
-        <thead>
-            <tr>
-                <th>Chip</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for table in tables %}
-            <tr>
-                <td>{{ table.denomination }}</td>
-                <td>{{ table.quantity }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    {% else %}
-        <p>No tables found</p>
-    {% endif %}
+
+    <a href="{% url 'table_list' %}">All Tables</a>
 </body>
 </html>

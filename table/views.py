@@ -31,5 +31,5 @@ def create_table(request):
 
 def table_list(request):
     tables = Table.objects.all()
-    print(tables)
-    return render(request, 'tables/tables.html', {'tables': tables})
+
+    return render(request, 'tables/all_tables.html', {'tables': tables})

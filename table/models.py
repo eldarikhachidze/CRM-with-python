@@ -16,4 +16,4 @@ class Table(models.Model):
     date_deleted = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"Fleet: {self.flot}"
+        return f"Table: {self.name}"
