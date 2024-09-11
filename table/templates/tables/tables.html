@@ -7,12 +7,16 @@
     <h1>Tables</h1>
     <form action="{% url 'create_table' %}" method="POST">
         {% csrf_token %}
-        {% for chip in chips %}
+
         <div>
-            <select name="chip">
-                <option >{{ chip.denomination }}</option>
-            </select>
-            <input type="number" name="quantity" value="0">
+            <input type="text" name="name" placeholder="Table Name">
+        {% for chip in chips %}
+            <div>
+                <select name="chip">
+                    <option >{{ chip.denomination }}</option>
+                </select>
+                <input type="number" name="quantity" value="0">
+            </div>
         </div>
         {% endfor %}
         <button type="submit">Submit</button>

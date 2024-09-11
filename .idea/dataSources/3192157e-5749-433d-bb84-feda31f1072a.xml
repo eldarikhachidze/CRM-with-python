@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="db [3]">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.49">
+<dataSource name="db [2]">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.45">
     <root id="1">
       <ServerVersion>3.45.1</ServerVersion>
     </root>
@@ -499,8 +499,6 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2024-09-11.19:05:42.942</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2024-09-11.15:05:42</LocalIntrospectionTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -2075,25 +2073,66 @@ model</ColNames>
       <Position>2</Position>
     </column>
     <check id="666" parent="568">
-      <Predicate>(JSON_VALID(&quot;flot&quot;) OR &quot;flot&quot; IS NULL)</Predicate>
+      <Predicate>(JSON_VALID(&quot;close_flot&quot;) OR &quot;close_flot&quot; IS NULL)</Predicate>
     </check>
-    <column id="667" parent="568" name="id">
+    <check id="667" parent="568">
+      <Predicate>(JSON_VALID(&quot;open_flot&quot;) OR &quot;open_flot&quot; IS NULL)</Predicate>
+    </check>
+    <column id="668" parent="568" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="668" parent="568" name="created_at">
-      <DasType>datetime|0s</DasType>
+    <column id="669" parent="568" name="close_flot">
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="669" parent="568" name="flot">
-      <DasType>text|0s</DasType>
+    <column id="670" parent="568" name="date_created">
+      <DasType>datetime|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <key id="670" parent="568">
+    <column id="671" parent="568" name="active">
+      <DasType>bool|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="672" parent="568" name="close_flot_total">
+      <DasType>real|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="673" parent="568" name="date_deleted">
+      <DasType>datetime|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="674" parent="568" name="date_edited">
+      <DasType>datetime|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="675" parent="568" name="name">
+      <DasType>varchar(200)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="676" parent="568" name="open_flot">
+      <DasType>text|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="677" parent="568" name="open_flot_total">
+      <DasType>real|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <column id="678" parent="568" name="result">
+      <DasType>real|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <key id="679" parent="568">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
