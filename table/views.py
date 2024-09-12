@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils import timezone
 from chip.models import Chip
 from .models import Table
 
@@ -60,7 +61,7 @@ def table_delete(request, id):
 
 def table_edit(request, id):
     table = Table.objects.get(id=id)
-
+    date_edited = timezone.now()
     if request.method == 'POST':
         name = request.POST.get('name', '').upper()
         denominations = request.POST.getlist('denominations')
@@ -83,6 +84,7 @@ def table_edit(request, id):
         table.name = name
         table.open_flot = flot
         table.open_flot_total = sum([denomination * quantity for denomination, quantity in flot.items()])
+        table.date_edited = date_edited
         table.save()
         messages.success(request, 'Table updated successfully')
         print(f"Table updated: {name} with flot: {flot} and total: {sum([denomination * quantity for denomination, quantity in flot.items()])}")
@@ -90,3 +92,4 @@ def table_edit(request, id):
         return redirect('table_list')
 
     return render(request, 'tables/edit_table.html', {'table': table})
+

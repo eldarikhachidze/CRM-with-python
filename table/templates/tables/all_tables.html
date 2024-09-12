@@ -10,26 +10,29 @@
     {% if tables %}
     {% for table in tables %}
     <h2>Table Name: {{ table.name }}</h2>
-    <table border="1" display="flex">
-        <thead>
+    <div>
+        <table border="1" display="flex">
+            <thead>
             <tr>
                 <th>Chip</th>
                 <th>Quantity</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for denomination, quantity in table.open_flot.items %}
+            </thead>
+            <tbody>
+            {% for denomination, quantity in table.open_flot.items %}
             <tr>
                 <td>{{ denomination|floatformat:0 }}</td>
                 <td>{{ quantity }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
             <tr>
                 <td>Total</td>
                 <td>{{ table.open_flot_total }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <h3>Table Status: {{ table.active|yesno:"Open,Closed" }}</h3>
+    </div>
     <div>
         <button><a href="{% url 'table_edit' table.id %}">Edit</a></button>
         <button><a href="{% url 'table_delete' table.id %}">Delete</a></button>
