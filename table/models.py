@@ -10,7 +10,8 @@ class Table(models.Model):
     close_flot = models.JSONField(default=dict)  # Default to an empty JSON object
     close_flot_total = models.FloatField(default=0.0)
     result = models.FloatField(default=0.0)
-    active = models.BooleanField(default=False)
+    status = models.BooleanField(default=True)
+    close_date = models.DateTimeField(null=True, blank=True)
     date_created = models.DateTimeField(default=timezone.now)
     date_edited = models.DateTimeField(null=True, blank=True)
     date_deleted = models.DateTimeField(null=True, blank=True)

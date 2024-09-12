@@ -93,3 +93,36 @@ def table_edit(request, id):
 
     return render(request, 'tables/edit_table.html', {'table': table})
 
+def close(request, id):
+    table = Table.objects.get(id=id)
+    date_closed = timezone.now()
+    if request.method == 'POST':
+        denominations = request.POST.getlist('denominations')
+        quantities = request.POST.getlist('quantities')
+
+        # We need a way to get the denominations, assuming you have them stored somewhere or provided in the form
+        flot = {}
+        for denomination, quantity in zip(denominations, quantities):
+            flot[float(denomination)] = int(quantity)
+
+        if not flot:
+            messages.error(request, 'Please add chips to the table')
+            return redirect('table_close_page', id=id)
+
+        table.close_flot = flot
+        table.close_flot_total = sum([denomination * quantity for denomination, quantity in flot.items()])
+        table.result = table.close_flot_total - table.open_flot_total
+        table.status = False
+        table.close_date = date_closed
+        table.save()
+        messages.success(request, 'Table closed successfully')
+        print(f"Table closed: {table.name} with flot: {flot} and total: {sum([denomination * quantity for denomination, quantity in flot.items()])}")
+
+        return redirect('table_list')
+
+    return render(request, 'tables/table_close.html', {'table': table})
+
+def table_close(request, id):
+    table = Table.objects.get(id=id)
+
+    return render(request, 'tables/table_close.html', {'table': table})

@@ -1,0 +1,43 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Table close</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <a href="{% url 'table_list' %}"><h3>Back to tables page</h3></a>-->
+
+<!--    <h1>Table close</h1>-->
+
+<!--    {% if table %}-->
+<!--    <h2>Table Name: {{ table.name }}</h2>-->
+<!--    <form action="{% url 'table_edit' table.id %}" method="POST">-->
+<!--        {% csrf_token %}-->
+
+<!--        <div>-->
+<!--            <label for="name">Table Name</label>-->
+<!--            <input type="text" name="name" id="name" value="{{ table.name }}">-->
+<!--            <table border="1">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Denomination</th>-->
+<!--                    <th>Quantity</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                {% for denomination, quantity in table.open_flot.items %}-->
+<!--                <tr>-->
+<!--                    <td><input type="number" name="denominations" value="{{ denomination|floatformat:0 }}"></td>-->
+<!--                    <td><input type="number" name="quantities" value="0"></td>-->
+<!--                </tr>-->
+<!--                {% endfor %}-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <button type="submit">Submit</button>-->
+<!--    </form>-->
+<!--    {% else %}-->
+<!--        <p>No table found</p>-->
+<!--    {% endif %}-->
+
+<!--</body>-->
+<!--</html>-->

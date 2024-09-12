@@ -29,11 +29,18 @@
                 <td>Total</td>
                 <td>{{ table.open_flot_total }}</td>
             </tr>
+            <tr>
+                <td>Result</td>
+                <td>{{ table.result }}</td>
+            </tr>
             </tbody>
         </table>
-        <h3>Table Status: {{ table.active|yesno:"Open,Closed" }}</h3>
+        <h3>Table Status: {{ table.status|yesno:"Open,Closed" }}</h3>
     </div>
     <div>
+        {% if table.status %}
+        <button><a href="{% url 'table_close' table.id %}">Close</a></button>
+        {% endif %}
         <button><a href="{% url 'table_edit' table.id %}">Edit</a></button>
         <button><a href="{% url 'table_delete' table.id %}">Delete</a></button>
     </div>
