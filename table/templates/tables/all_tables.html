@@ -43,6 +43,9 @@
             <tr>
                 <td>Result</td>
                 <td>{{ table.result }}</td>
+                {% if table.close_date %}
+                <td>Close time: {{ table.close_date|date:"H:i" }}</td>
+                {% endif %}
             </tr>
             </tbody>
         </table>

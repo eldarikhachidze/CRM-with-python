@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+from datetime import timedelta
 import json
 from chip.models import Chip
 from .models import Table
@@ -55,6 +56,10 @@ def table_list(request):
                 table.close_flot_dict = {}
         else:
             table.close_flot_dict = table.close_flot
+            # If the close date is not in UTC, convert it to UTC
+        if table.close_date:
+            table.close_date = table.close_date + timedelta(hours=4)
+
 
     return render(request, 'tables/all_tables.html', {'tables': tables})
 
