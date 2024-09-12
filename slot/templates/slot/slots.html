@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slots</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">Back to Home</a>
+    <button onclick="window.location.href='{% url 'create' %}'">Create Slot</button>
+    <h1>Slots</h1>
+    {% if slots %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Slot Name</th>
+                <th>Slot Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot in slots %}
+            <tr>
+                <td>{{ slot.slot_name }}</td>
+                <td>{{ slot.slot_type }}</td>
+                <td>
+                    <button onclick="window.location.href='{% url 'edit' slot.id %}'">Edit</button>
+                    <button onclick="window.location.href='{% url 'delete' slot.id %}'">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Slot not found</p>
+    {% endif %}
+</body>
+</html>

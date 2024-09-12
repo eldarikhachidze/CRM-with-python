@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Slot</title>
+    </head>
+    <body>
+        <a href="{% url 'all_slot' %}">Back to Slots</a>
+        <h1>Edit Slot</h1>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>Error:{% if message.tags %} {% endif %} {{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{% url 'edit' slot.id %}" method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="name">Slot Name</label>
+                <input type="text" name="name" id="name" value="{{ slot.slot_name }}">
+            </div>
+            <div>
+                <label for="type">Slot Type</label>
+                <input type="text" name="type" id="type" value="{{ slot.slot_type }}">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>

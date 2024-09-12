@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home_page',
     'chip',
-    'table'
+    'table',
+    'slot',
 ]
 
 MIDDLEWARE = [
