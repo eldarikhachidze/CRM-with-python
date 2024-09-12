@@ -11,11 +11,16 @@
     {% for table in tables %}
     <h2>Table Name: {{ table.name }}</h2>
     <div>
+        {% load custom_filters %}
+
         <table border="1" display="flex">
             <thead>
             <tr>
                 <th>Chip</th>
-                <th>Quantity</th>
+                <th>Open Quantity</th>
+                {% if table.close_flot %}
+                <th>Close Quantity</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -23,11 +28,17 @@
             <tr>
                 <td>{{ denomination|floatformat:0 }}</td>
                 <td>{{ quantity }}</td>
+                {% if table.close_flot %}
+                <td>{{ table.close_flot_dict|dict_get:denomination|default_if_none:"" }}</td>
+                {% endif %}
             </tr>
             {% endfor %}
             <tr>
                 <td>Total</td>
                 <td>{{ table.open_flot_total }}</td>
+                {% if table.close_flot %}
+                <td>{{ table.close_flot_total }}</td>
+                {% endif %}
             </tr>
             <tr>
                 <td>Result</td>

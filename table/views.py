@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+import json
 from chip.models import Chip
 from .models import Table
 
@@ -45,6 +46,15 @@ def create_table(request):
 
 def table_list(request):
     tables = Table.objects.all()
+
+    for table in tables:
+        if isinstance(table.close_flot, str):
+            try:
+                table.close_flot_dict = json.loads(table.close_flot)
+            except json.JSONDecodeError:
+                table.close_flot_dict = {}
+        else:
+            table.close_flot_dict = table.close_flot
 
     return render(request, 'tables/all_tables.html', {'tables': tables})
 
