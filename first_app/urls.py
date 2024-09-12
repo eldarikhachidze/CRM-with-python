@@ -23,4 +23,5 @@ urlpatterns = [
     path('chip/', include('chip.urls')),
     path('table/', include('table.urls')),
     path('slot/', include('slot.urls')),
+    path('slot_pit/', include('slot_pit.urls')),
 ]
