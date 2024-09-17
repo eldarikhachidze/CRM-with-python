@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slot Pit</title>
+</head>
+<body>
+<a href="{% url 'all_slot' %}">Back to Slots</a>
+<h1>Slot Pit</h1>
+<form  method="post">
+    {% csrf_token %}
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Slot Name</th>
+            <th>Slot Type</th>
+            <th>BVB money</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for slot in slots %}
+        <tr>
+            <td>{{ slot.slot_name }}</td>
+            <td>{{ slot.slot_type }}</td>
+            <td><input type="text" name="bvb_money" placeholder="BVB money" value="{{ slot.bv_count }}"></td>
+
+
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+</body>
+</html>

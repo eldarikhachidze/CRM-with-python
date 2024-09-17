@@ -6,6 +6,7 @@
 <body>
     <a href="{% url 'home' %}">Back to Home</a>
     <button onclick="window.location.href='{% url 'create' %}'">Create Slot</button>
+    <button onclick="window.location.href='{% url 'slot_pit' %}'">BV Count</button>
     <h1>Slots</h1>
     {% if slots %}
     <table border="1">
@@ -24,6 +25,13 @@
                 <td>
                     <button onclick="window.location.href='{% url 'edit' slot.id %}'">Edit</button>
                     <button onclick="window.location.href='{% url 'delete' slot.id %}'">Delete</button>
+                    {% if slot.status %}
+                    <!-- If slot.status is False, show the 'Remove from Pit' button -->
+                    <button onclick="window.location.href='{% url 'remove_from_pit' slot.id %}'">Remove from Pit</button>
+                    {% else %}
+                    <!-- If slot.status is True, show the 'Add to Pit' button -->
+                    <button onclick="window.location.href='{% url 'add_to_pit' slot.id %}'">Add to Pit</button>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

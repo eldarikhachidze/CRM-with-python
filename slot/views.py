@@ -30,3 +30,17 @@ def delete(request, id):
 def edit(request, id):
     slot = Slot_machine.objects.get(id=id)
     return render(request, 'slot/edit.html', {'slot': slot})
+
+def add_to_pit(request, id):
+    slot = Slot_machine.objects.get(id=id)
+    slot.status = True
+    slot.save()
+
+    return redirect('all_slot')
+
+def remove_from_pit(request, id):
+    slot = Slot_machine.objects.get(id=id)
+    slot.status = False
+    slot.save()
+
+    return redirect('all_slot')
