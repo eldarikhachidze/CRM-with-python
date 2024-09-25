@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Pit</title>
+</head>
+    <body>
+    <a href="{% url 'all_slot' %}">Back to Slot</a>
+    <h1>Create Pit</h1>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>Error:{% if message.tags %} {% endif %} {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="{% url 'create_pit' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Hall Name</label>
+        <input type="text" name="name" id="name">
+        <button type="submit">Create Hall</button>
+    </form>
+    {% if halls %}
+    <h1>PITS</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Pit Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hall in halls %}
+            <tr>
+                <td>{{ hall.name }}</td>
+                <td>
+                    <a href="{% url 'edit_pit' hall.id %}">Edit</a>
+                    <a href="{% url 'delete_pit' hall.id %}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <p>No Pit Name</p>
+    {% endif %}
+
+    </body>
+</html>

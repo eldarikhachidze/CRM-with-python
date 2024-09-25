@@ -4,7 +4,7 @@
         <title>Create Slot</title>
     </head>
     <body>
-        <a href="{% url 'home' %}">Back to Home</a>
+        <a href="{% url 'all_slot' %}">Back to Slots</a>
         <h1>Create Slot</h1>
         {% if messages %}
         <ul>
@@ -20,8 +20,8 @@
                 <input type="text" name="name" id="name">
             </div>
             <div>
-                <label for="type">Slot Type</label>
-                <input type="text" name="type" id="type">
+                <label for="brand">Slot Type</label>
+                <input type="text" name="brand" id="brand">
             </div>
             <button type="submit">Submit</button>
         </form>

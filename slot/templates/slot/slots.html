@@ -6,39 +6,57 @@
 <body>
     <a href="{% url 'home' %}">Back to Home</a>
     <button onclick="window.location.href='{% url 'create' %}'">Create Slot</button>
-    <button onclick="window.location.href='{% url 'slot_pit' %}'">BV Count</button>
-    <h1>Slots</h1>
-    {% if slots %}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Slot Name</th>
-                <th>Slot Type</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for slot in slots %}
-            <tr>
-                <td>{{ slot.slot_name }}</td>
-                <td>{{ slot.slot_type }}</td>
-                <td>
-                    <button onclick="window.location.href='{% url 'edit' slot.id %}'">Edit</button>
-                    <button onclick="window.location.href='{% url 'delete' slot.id %}'">Delete</button>
-                    {% if slot.status %}
-                    <!-- If slot.status is False, show the 'Remove from Pit' button -->
-                    <button onclick="window.location.href='{% url 'remove_from_pit' slot.id %}'">Remove from Pit</button>
-                    {% else %}
-                    <!-- If slot.status is True, show the 'Add to Pit' button -->
-                    <button onclick="window.location.href='{% url 'add_to_pit' slot.id %}'">Add to Pit</button>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>Slot not found</p>
+    <button onclick="window.location.href='{% url 'create_pit' %}'">Create Slot Pit</button>
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>Error:{% if message.tags %} {% endif %} {{ message }}</li>
+        {% endfor %}
+    </ul>
     {% endif %}
+
+
+        {% if slots %}
+        <h1>Slots</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Slot Name</th>
+                    <th>Brand</th>
+                    <th>Actions</th>
+                    <th>Choice hall</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for slot in slots %}
+                <tr>
+                    <td>{{ slot.name }}</td>
+                    <td>{{ slot.brand }}</td>
+                    <td>
+                        <a href="{% url 'edit' slot.id %}"><button>Edit</button></a>
+                        <a href="{% url 'delete' slot.id %}"><button>Delete</button></a>
+                    </td>
+                    <td>
+                        <form action="{% url 'add_slot_to_pit' %}" method="post">
+                            {% csrf_token %}
+
+                            <select name="hall" id="hall" required>
+                                {% for hall in halls %}
+                                <option value="{{ hall.id }}">{{ hall.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="slot" value="{{ slot.id }}">
+                            <button type="submit">Add to hall</button>
+
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No Slot</p>
+        {% endif %}
 </body>
 </html>

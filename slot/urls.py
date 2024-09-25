@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import all_slot, create, delete, edit, add_to_pit, remove_from_pit
+from .views import all_slot, create, delete, edit, create_pit, edit_pit, delete_pit, add_slot_to_pit
 
 
 urlpatterns = [
@@ -8,6 +8,9 @@ urlpatterns = [
     path('create_slot/', create, name='create_slot'),
     path('delete/<int:id>/', delete, name='delete'),
     path('edit/<int:id>/', edit, name='edit'),
-    path('add_to_pit/<int:id>/', add_to_pit, name='add_to_pit'),
-    path('remove_from_pit/<int:id>/', remove_from_pit, name='remove_from_pit'),
+    path('create_pit/', create_pit, name='create_pit'),
+    path('edit_pit/<int:id>/', edit_pit, name='edit_pit'),
+    path('delete_pit/<int:id>/', delete_pit, name='delete_pit'),
+    path('add_slot_to_pit/', add_slot_to_pit, name='add_slot_to_pit'),
+
 ]

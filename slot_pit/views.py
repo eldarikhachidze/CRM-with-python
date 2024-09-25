@@ -1,18 +1,18 @@
-from django.shortcuts import render
-from slot.models import Slot_machine
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from slot.models import SlotMachine, Hall
 
 # Create your views here.
 
 def slot_pit(request):
-    slots = Slot_machine.objects.all().order_by('slot_type')
-    print(slots)
-    slots_in_pit = []
-    for slot in slots:
-        if slot.status:
-            slots_in_pit.append(slot)
+    halls = Hall.objects.all().order_by('name')
 
-    return render(request, 'slot_pit/slot_pit.html', {'slots': slots_in_pit})
+    return render(request, 'slot_pit/slot_pit.html', {'halls': halls})
 
-def edit(request, id):
-    slot = Slot_machine.objects.get(id=id)
-    return render(request, 'slot/edit.html', {'slot': slot})
+def delete_slot_machine_from_pit(request, hall_id, slot_id):
+    hall = Hall.objects.get(id=hall_id)
+    slot = SlotMachine.objects.get(id=slot_id)
+
+    hall.slot_machines.remove(slot)
+
+    return redirect('slot_pit')
